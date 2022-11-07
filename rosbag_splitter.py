@@ -1,13 +1,9 @@
 import subprocess
-import sys
 import argparse
 import os
-# Embag is a drop in replacement for rosbag with faster runtimes.
-import embag as rosbag
 
-# Test input bag: bags/_2022-05-26-16-27-52_1.bag
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(
         description="This script is used for cutting a rosbag")
     parser._action_groups.pop()
@@ -18,22 +14,31 @@ if __name__ == "__main__":
                           help="Path to bag to cut", required=True)
     required.add_argument('-e', '--end_time', type=float,
                           help="End time in seconds from begginning of bag", required=True)
-    optional.add_argument('-o', '--output_bag', type=str, default="cut.bag",
+    optional.add_argument('-o', '--output_bag', type=str, default="",
                           help="Specify output bag path and name, default is in the same folder with suffix '_cut'")
     optional.add_argument('-b', '--begin_time', type=float, default=0.0,
                           help="Starting time in seconds from beginning of bag, default is 0.0")
     args = parser.parse_args()
 
-    # We could probably do without the extra variable declaration
     input_bag_path = args.input_bag
-    output_bag = args.output_bag
-    begin_time = args.begin_time
-    end_time = args.end_time
 
     # Perform argument validity checks
-
     if not os.path.exists(input_bag_path):
         raise FileNotFoundError("The input rosbag could not be found")
+
+    # Get the full path to the input file, because we want to save our bag to that dir
+    output_dir = os.path.dirname(os.path.abspath(input_bag_path))+'/'
+
+    # Output bag path name creation and validation
+    if args.output_bag == "":
+        output_bag = os.path.splitext(args.input_bag)[0]+"_cut.bag"
+    elif not args.output_bag.endswith(".bag"):
+        output_bag = output_dir + args.output_bag+".bag"
+    else:
+        output_bag = output_dir + args.output_bag
+
+    begin_time = args.begin_time
+    end_time = args.end_time
 
     if end_time <= begin_time:
         raise ValueError("End time cannot be smaller or equal to begin time")
@@ -43,12 +48,19 @@ if __name__ == "__main__":
     start_time_of_bag = float(
         subprocess.check_output(start_command).decode('UTF-8'))
 
+    # Generate the time filter of the rosbag
     cut_begin = start_time_of_bag+begin_time
     cut_end = cut_begin+end_time
-
     time_filter = 't.to_sec() >= {0} and t.to_sec() <= {1}'.format(
         cut_begin, cut_end)
-    print(time_filter)
+    print("Using Filter:", time_filter)
+    print("Saving the cut bag as", output_bag)
+
+    # Execute the filter on the rosbag
     filter_command = ['rosbag', 'filter',
                       input_bag_path, output_bag, time_filter]
     subprocess.run(filter_command)
+
+
+if __name__ == "__main__":
+    main()
