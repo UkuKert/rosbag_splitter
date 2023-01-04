@@ -1,0 +1,5 @@
+tqdm
+--extra-index-url https://rospypi.github.io/simple/
+rosbag
+rospy 
+roslz4
