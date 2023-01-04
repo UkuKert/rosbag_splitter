@@ -57,7 +57,7 @@ def main():
 
     # Generate the time filter of the rosbag
     cut_begin = start_time_of_bag+begin_time
-    cut_end = cut_begin+end_time
+    cut_end = start_time_of_bag + end_time
     time_filter = 't.to_sec() >= {0} and t.to_sec() <= {1}'.format(
         cut_begin, cut_end)
     print("Using Filter:", time_filter)
