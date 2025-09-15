@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "rosbag-splitter"
+version = "1.0.0"
+description = "Small Python project to split rosbags by times"
+authors = ["Uku Kert Paidra <ukukert@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+rosbag = "^1.15.11"
+rospy = "^1.15.11"
+roslz4 = "^1.14.3.post2"
+tqdm = "^4.67.1"
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.13.0,<0.14.0)",
+    "mypy (>=1.18.1,<2.0.0)"
+]
+
+[[tool.poetry.source]]
+name = "rospypi"
+url = "https://rospypi.github.io/simple/"
+priority = "supplemental"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "A", "B", "E", "F", "I", "N", "W", "Q", "C90", "C4", "PL", "UP", "ERA", "EXE", 
+    "ICN", "NPY", "PLE", "PLR", "PLW", "PIE", "PYI", "RET", "RSE", "RUF", "SIM",
+    "T10", "TID", "YTT", "PERF"
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
