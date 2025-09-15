@@ -2,8 +2,11 @@
 Pure python script to easily split rosbag from commandline.
 This script is made to cut rosbags without having to install ros and also to allow cutting bags without knowing the UNIX timestamps of the starting and end times.
 ## Requirements
-The requirements can be seen in the requirements.txt file. To install them run
+The requirements can be seen in the requirements.txt file. To setup the venv and install dependencies, run:
 ```bash
+$ sudo apt update && sudo apt install python3-venv liblz4-dev
+$ python3 -m venv rosbag_splitter_env
+$ source rosbag_splitter_env/bin/activate
 $ python3 -m pip install -r requirements.txt
 ```
 ## Usage
@@ -24,4 +27,3 @@ For more help run the script with the argument "-h"
 ```bash
 $ python3 rosbag_splitter.py -h
 ```
-
