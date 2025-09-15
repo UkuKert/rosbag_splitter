@@ -22,9 +22,9 @@ def parse_args():
     required.add_argument('-e', '--end-time', type=float,
                           help="End time in seconds from begginning of bag", required=True)
     optional.add_argument('-o', '--output-bag', type=str, default="",
-                          help="Specify output bag name. Path is the same as input path")
+                          help="Specify output bag name.")
     optional.add_argument('-b', '--begin-time', type=float, default=0.0,
-                          help="Starting time in seconds from beginning of bag, default is 0.0")
+                          help="Starting time in seconds from beginning of bag, defaults to 0.0")
     return parser.parse_args()
 
 
