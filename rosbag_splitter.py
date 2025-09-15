@@ -4,6 +4,13 @@ import os
 
 
 def main():
+    '''
+    This script is for easy cutting of ROSBAGS
+
+    Usage:
+    $ rosbag_splitter.py -i  INPUT_ROSBAG_PATH.bag -o (Optional) OUTPUT_ROSBAG_FILE_NAME.bag -b BEGIN_TIME_IN_S -e (Optional) END_TIME_IN_S
+
+    '''
     parser = argparse.ArgumentParser(
         description="This script is used for cutting a rosbag")
     parser._action_groups.pop()
@@ -15,7 +22,7 @@ def main():
     required.add_argument('-e', '--end_time', type=float,
                           help="End time in seconds from begginning of bag", required=True)
     optional.add_argument('-o', '--output_bag', type=str, default="",
-                          help="Specify output bag path and name, default is in the same folder with suffix '_cut'")
+                          help="Specify output bag name. Path is the same as input path")
     optional.add_argument('-b', '--begin_time', type=float, default=0.0,
                           help="Starting time in seconds from beginning of bag, default is 0.0")
     args = parser.parse_args()
