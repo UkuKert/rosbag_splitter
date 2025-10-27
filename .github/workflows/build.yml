@@ -3,10 +3,15 @@ on:
   push:
     tags:
       - "v*.*.*"
+    workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Install system dependencies
+        run: sudo apt update && sudo apt install -y liblz4-dev
+
       - uses: actions/checkout@v3
       - name: Build and publish to pypi
         uses: JRubics/poetry-publish@v2.1
