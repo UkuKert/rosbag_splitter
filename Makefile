@@ -2,8 +2,8 @@
 .PHONY: lint fmt format
 
 lint: ## Run code linters
-	poetry run ruff check rosbag_splitter.py
+	poetry run ruff check rosbag_splitter
 
 fmt format: ## Run code formatters
-	poetry run ruff format rosbag_splitter.py
-	poetry run ruff check --fix rosbag_splitter.py
+	poetry run ruff format rosbag_splitter
+	poetry run ruff check --fix rosbag_splitter
